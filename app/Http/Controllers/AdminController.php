@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;          
 use Maatwebsite\Excel\Facades\Excel;
 use App\Jobs\ImportAlumni;
-use App\Jobs\importAdmin;
+use App\Jobs\ImportAdmin;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
@@ -146,7 +146,7 @@ class AdminController extends Controller
                 'name'             => 'sometimes|required|string|max:255',
                 'email'            => [
                 'sometimes',
-                'nullable',
+                'required',
                 'email',
                 Rule::unique('users', 'email')->ignore($admin->id),
                 function ($attribute, $value, $fail) {

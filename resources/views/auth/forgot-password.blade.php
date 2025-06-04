@@ -3,14 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SMAK YOS SUDARSO - Login</title>
+    <title>SMAK YOS SUDARSO – Lupa Password</title>
+
+    <!-- Google Fonts & Font Awesome -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" />
+
+    <!-- SweetAlert2 (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
+
   <body>
     <main class="login-container">
       <section class="login-wrapper">
@@ -18,6 +28,7 @@
           <img
             src="{{ asset('assets/image 3.jpeg') }}"
             class="school-image"
+            alt="Background Image"
           />
           <div class="image-overlay"></div>
         </section>
@@ -27,69 +38,72 @@
             <h1 class="main-title">TRACER STUDY</h1>
             <h2 class="school-name">SMAK YOS SUDARSO</h2>
           </header>
+
           <div class="form-container">
             <form action="{{ route('password.email') }}" method="POST">
-            @csrf
+              @csrf
 
-            <h3 class="form-title">Forget Password</h3>
+              <h3 class="form-title">Lupa Password</h3>
 
-            <div class="form-group">
+              <div class="form-group">
                 <label for="email" class="form-label">Email</label>
                 <input
-                type="email"
-                name="email"            {{-- HARUS ADA --}}
-                id="email"
-                placeholder="you@example.com"
-                class="form-input"
-                required                 {{-- opsional tapi disarankan --}}
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="you@example.com"
+                  class="form-input"
+                  required
                 />
-            </div>
-            <div class="form-actions">
-            <button type="submit" class="sign-in-button">
-                Send Reset Link
-            </button>
+              </div>
 
-            <button type="button" class="backtologin-button" onclick="window.location.href='{{ route('login') }}'">Kembali ke Sign In</button>
+              <div class="form-actions">
+                <button type="submit" class="sign-in-button">
+                  Kirim Reset Link
+                </button>
+                <button
+                  type="button"
+                  class="backtologin-button"
+                  onclick="window.location.href='{{ route('login') }}'"
+                >
+                  Kembali ke Sign In
+                </button>
+              </div>
             </form>
-            </div>
-
           </div>
-            @if (session('status'))
-            <div class="alert alert-success" role="alert">
-                {{ session('status') }}
-            </div>
-            @endif
-            {{-- end session message --}}
 
-            {{-- begin validation errors --}}
-            @if ($errors->any())
-            <div class="alert alert-danger" role="alert">
-                <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-                </ul>
+          @if (session('status'))
+            <div class="alert alert-success" role="alert">
+              Kami telah mengirimkan tautan pengaturan ulang kata sandi Anda melalui email
             </div>
-            @endif
+          @endif
         </section>
       </section>
     </main>
 
-<script>
-  function togglePassword(inputId, iconId) {
-    const input = document.getElementById(inputId);
-    const icon = document.getElementById(iconId);
-    if (input.type === "password") {
-        input.type = "text";
-        icon.classList.remove("fa-eye");
-        icon.classList.add("fa-eye-slash");
-    } else {
-        input.type = "password";
-        icon.classList.remove("fa-eye-slash");
-        icon.classList.add("fa-eye");
-    }
-}
-</script>
+    <!-- SweetAlert handler -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        @if ($errors->has('email'))
+          Swal.fire({
+            title: 'Gagal!',
+            text: 'Email tidak ditemukan.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#3085d6'
+          });
+        @endif
 
+        @if (session('status'))
+          Swal.fire({
+            title: 'Berhasil!',
+            text: 'Kami telah mengirimkan tautan pengaturan ulang kata sandi Anda melalui email',
+            icon: 'success',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#3085d6'
+          });
+        @endif
+      });
+    </script>
   </body>
 </html>

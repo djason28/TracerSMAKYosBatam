@@ -46,29 +46,44 @@ Route::get('/reset-password/{token}', function (Request $request, string $token)
 })->middleware('guest')->name('password.reset');
 
 Route::post('/reset-password', function (Request $request) {
+    // Cari user berdasarkan email untuk menentukan minimal length
+    $email = $request->input('email');
+    $user  = User::where('email', $email)->first();
+
+    // Jika role = 'admin', min:6; selainnya (alumni) min:8
+    $min = 8;
+    if ($user && $user->role === 'admin') {
+        $min = 6;
+    }
+
+    // Lakukan validasi dinamis
     $request->validate([
-        'token' => 'required',
-        'email' => 'required|email',
-        'password' => 'required|min:8|confirmed',
+        'token'    => 'required',
+        'email'    => 'required|email',
+        'password' => "required|string|confirmed|min:$min",
+    ], [
+        'password.min' => "Password harus minimal $min karakter.",
     ]);
- 
+
+    // Proses reset password bawaan Laravel
     $status = Password::reset(
         $request->only('email', 'password', 'password_confirmation', 'token'),
         function (User $user, string $password) {
             $user->forceFill([
-                'password' => Hash::make($password)
+                'password' => Hash::make($password),
             ])->setRememberToken(Str::random(60));
- 
+
             $user->save();
- 
+
             event(new PasswordReset($user));
         }
     );
- 
-    return $status === Password::PasswordReset
+
+    return $status === Password::PASSWORD_RESET
         ? redirect()->route('login')->with('status', __($status))
         : back()->withErrors(['email' => [__($status)]]);
 })->middleware('guest')->name('password.update');
+
 
 
 

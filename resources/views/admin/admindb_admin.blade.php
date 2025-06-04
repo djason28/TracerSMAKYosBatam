@@ -218,7 +218,7 @@
     });
 
     const csrfToken = csrfMeta.content;
-
+    
     form.addEventListener('submit', async e => {
       e.preventDefault();
       // Validasi: wajib ada file
@@ -259,7 +259,7 @@
           headers: { 'X-CSRF-TOKEN': csrfToken },
           body: formData
         });
-
+        console.log('Response dari server:', response);
         if (!response.ok) {
           throw new Error('HTTP ' + response.status);
         }
