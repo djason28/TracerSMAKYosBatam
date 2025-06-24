@@ -83,7 +83,7 @@ class ImportAlumni implements ShouldQueue
             if ($importer->rowMissingField) {
                 \Log::error("ImportAlumni: Ada baris yang tidak lengkap (nis atau nama kosong)");
                 Cache::put("import-status:{$this->jobId}", [
-                    'status'     => 'missing_fields',
+                    'status'     => 'row_missing',
                     'duplicates' => $importer->duplicateNis,
                     'imported'   => $importer->importedNis,
                 ], now()->addMinutes(10));

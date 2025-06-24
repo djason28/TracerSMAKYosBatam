@@ -1351,3 +1351,60 @@ input:disabled {
     top: 0; 
   }
 }
+
+
+@media (max-width: 768px) {
+  .modal-body {
+    flex-direction: column;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .modal-section {
+  padding:5px;
+
+}
+
+  .modal-body .modal-section {
+    order: initial; 
+    width: inherit;
+  }
+
+  .modal-body .file-name {
+    order: 2;
+  }
+
+  .modal-body .import-button {
+    order: 3;
+  }
+
+  .modal-body input,
+  .modal-body button {
+    width: 100%;
+  }
+}
+
+@media (min-width: 641px) {
+  /* Di atas 640px (desktop/tablet besar), sembunyikan tombol mobile logout */
+  .mobile-logout {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Di maks 640px (HP), tampilkan mobile-logout dan sembunyikan search-section agar header lebih sederhana (opsional) */
+  .mobile-logout {
+    display: inline-block;
+    margin-left: 16px; /* beri jarak antara ikon ☰ dan tulisan Log Out */
+    background: none;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  /* Jika mau header lebih ringkas, sembunyikan search di mobile (opsional) */
+  .search-section {
+    display: none;
+  }
+}

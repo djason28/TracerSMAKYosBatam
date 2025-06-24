@@ -35,7 +35,7 @@ function deleteAdmin(id) {
       if (result.isConfirmed) {
         const token = localStorage.getItem('token'); // atau ambil dari meta tag jika tidak pakai token
 
-        fetch(`https://yostracer.web.id/api/admin/admin/${id}`, {
+        fetch(`/api/admin/admin/${id}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`, // sesuaikan jika pakai Sanctum/jwt
@@ -85,7 +85,7 @@ function deleteAlumni(id) {
       if (result.isConfirmed) {
         const token = localStorage.getItem('token'); // atau ambil dari meta tag jika tidak pakai token
 
-        fetch(`https://yostracer.web.id/api/admin/alumni/${id}`, {
+        fetch(`/api/admin/alumni/${id}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`, // sesuaikan jika pakai Sanctum/jwt
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const token = localStorage.getItem('token');
 
         try {
-          const response = await fetch('https://yostracer.web.id/api/admin/admin', {
+          const response = await fetch('/api/admin/admin', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const token = localStorage.getItem('token');
 
     try {
-      const response = await fetch('https://yostracer.web.id/api/admin/alumni', {
+      const response = await fetch('/api/admin/alumni', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -395,7 +395,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function performSearch() {
         const query = searchInput.value.trim();
 
-        fetch(`https://yostracer.web.id/dashboard/admin/search?query=${encodeURIComponent(query)}`)
+        fetch(`/dashboard/admin/search?query=${encodeURIComponent(query)}`)
             .then(response => response.json())
             .then(data => {
                 tableBody.innerHTML = '';
@@ -602,7 +602,7 @@ function deleteSelectedAdmins() {
     if (result.isConfirmed) {
       const token = localStorage.getItem('token');
 
-      fetch('https://yostracer.web.id/api/admin/admin/batch-delete', {
+      fetch('/api/admin/admin/batch-delete', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -651,7 +651,7 @@ function deleteSelectedAlumni() {
     if (result.isConfirmed) {
       const token = localStorage.getItem('token');
 
-      fetch('https://yostracer.web.id/api/admin/alumni/batch-delete', {
+      fetch('/api/admin/alumni/batch-delete', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

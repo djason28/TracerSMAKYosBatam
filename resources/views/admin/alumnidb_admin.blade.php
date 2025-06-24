@@ -382,6 +382,9 @@
             case 'import_failed':
               text = 'Terjadi kesalahan saat import. Silakan coba lagi.';
               break;
+            case 'row_missing':
+              text = 'Ada baris yang tidak lengkap atau tidak valid. Pastikan semua kolom penting terisi.';
+              break;
           }
 
           Swal.fire({
